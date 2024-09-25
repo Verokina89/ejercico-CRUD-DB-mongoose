@@ -78,7 +78,7 @@ router.put('/id/:_id', async (req, res) => {
 }   
 in 200 OK*/
 
-//Middleware/route to delete tasks (postmant http://localhost:8080/id/66f49380927adeda4fd7f57a)
+//Middleware/route to delete tasks 
 router.delete('/id/:_id', async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params._id);
