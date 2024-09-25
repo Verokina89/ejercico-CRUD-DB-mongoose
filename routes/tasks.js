@@ -2,7 +2,7 @@ const express = require('express');
 const Task = require('../models/Task');
 const router = express.Router();
 
-//Middleware Create tarea
+// Middleware Create tarea
 router.post('/create', async (req, res) => {
   try {
     const newTask = new Task(req.body);
@@ -11,9 +11,10 @@ router.post('/create', async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-});
+});    /*(prueba postman POST: http://localhost:8080/  ->
+{"title":"compras"} 201) OK */
 
-//get all tareas
+//Middleware/route get all tareas 
 router.get('/', async (req, res) => {
   try {
     const tasks = await Task.find();
@@ -21,9 +22,10 @@ router.get('/', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+});    /*(prueba postman GET: http://localhost:8080/ --> SEND) 201 OK*/
 
-//get tarea by Id
+
+//Middleware/route get tarea by Id (busca por id) 
 router.get('/id/:_id', async (req, res) => {
   try {
     const task = await Task.findById(req.params._id);
@@ -32,9 +34,10 @@ router.get('/id/:_id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+});   /*(prueba postman GET: http://localhost:8080/id/66f49c669d86fbc3853ddf82) --> SEND) 200 */
 
-// mark task as complete. (este PUT que marcar la tarea completada,  actualizad en la base de datos el estado)
+
+//Middleware/route mark task as complete. (este PUT que marcar la tarea completada,  actualizad en la base de datos el estado) 
 router.put('/markAsCompleted/:_id', async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params._id, { completed: true }, { new: true });
@@ -44,9 +47,18 @@ router.put('/markAsCompleted/:_id', async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-});
+});    /*(prueba postman PUT: http://localhost:8080/id/66f49c669d86fbc3853ddf82) --> {
+    "_id": "66f49c669d86fbc3853ddf82",
+    "title": "bañar a canela",
+    "completed": true,
+    "createdAt": "2024-09-25T23:27:34.346Z",
+    "updatedAt": "2024-09-25T23:36:22.193Z",
+    "__v": 0
+}
+SEND) in 200 OK*/
 
-// Actualizar tarea 
+
+///Middleware/path to update tasks by id
 router.put('/id/:_id', async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params._id, { title: req.body.title }, { new: true });
@@ -55,9 +67,18 @@ router.put('/id/:_id', async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-});
+});   /* (prueba postman PUT: http://localhost:8080/id/66f49c669d86fbc3853ddf82) ---> SEND 
+   {
+    "_id": "66f49d4e9d86fbc3853ddf86",
+    "title": "lavar coche",
+    "completed": false,
+    "createdAt": "2024-09-25T23:31:26.358Z",
+    "updatedAt": "2024-09-25T23:50:11.707Z",
+    "__v": 0
+}   
+in 200 OK*/
 
-// Eliminar tarea
+//Middleware/route to delete tasks (postmant http://localhost:8080/id/66f49380927adeda4fd7f57a)
 router.delete('/id/:_id', async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params._id);
@@ -66,6 +87,11 @@ router.delete('/id/:_id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+});    /* (prueba postman DELETE: http://localhost:8080/id/66f49c669d86fbc3853ddf82) ---> SEND 
+{
+    "message": "Tarea eliminada"
+}
+in 200 OK*/
+
 
 module.exports = router;
