@@ -15,15 +15,20 @@ app.listen(PORT, () => console.log(`La aplicación está escuchando en el puerto
 
 
 /*
-// Conectar a la base de datos
-connectDB();
+const express = require("express")
+const app = express()
+const dbConnection = require("./config/config")
+const router = require("./routes/task")
 
-// Middleware
-app.use(express.json());
-app.use('/tasks', tasksRoutes);
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-  console.log(`Servidor en ejecución en http://localhost:${PORT}`);
-});
+app.use("/", router)
+
+dbConnection()
+
+const PORT = 8080
+app.listen(PORT, () => console.log(`La aplicación está escuchando en el puerto http://localhost:${PORT}`))
+
+
 */

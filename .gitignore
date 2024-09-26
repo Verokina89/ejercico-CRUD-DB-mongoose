@@ -1,9 +1,3 @@
-# Ignorar dependencias instaladas
-node_modules
-
-# Ignorar archivos de configuración sensibles
+node_modules/
 .env
-
-# Ignorar el archivo de bloqueo de dependencias
 package-lock.json
-

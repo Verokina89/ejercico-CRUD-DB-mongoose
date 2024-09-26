@@ -2,7 +2,7 @@ const express = require('express');
 const Task = require('../models/Task');
 const router = express.Router();
 
-// Middleware Create tarea
+// Middleware Create tarea (asincrona para que no genere errores)
 router.post('/create', async (req, res) => {
   try {
     const newTask = new Task(req.body);
@@ -95,3 +95,18 @@ in 200 OK*/
 
 
 module.exports = router;
+
+
+/*
+const express = require("express")
+const router = express.Router()
+const TaskController = require("../controllers/Task.controller")
+
+router.post("/create", TaskController.create)
+router.get("/", TaskController.getAll)
+router.get("/id/:_id", TaskController.getById)
+router.put("/markAsCompleted/:_id", TaskController.updateCompleted)
+router.delete("/id/:_id", TaskController.deleteById)
+
+module.exports = router
+*/
